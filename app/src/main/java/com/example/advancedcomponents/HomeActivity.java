@@ -61,6 +61,5 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(this,TeamListActivity.class);
             startActivity(intent);
         });
-
     }
 }

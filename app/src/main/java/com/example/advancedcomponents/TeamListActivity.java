@@ -24,9 +24,20 @@ public class TeamListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_team_list);
         getSupportActionBar().setTitle("Team List");
         setupTeamListAddBtn();
+        deleteBtn();
         setUpTeamListData();
-        setupListViewTeamList();
+        setupTeamList();
+    }
 
+    private void deleteBtn() {
+        Button deleteBtn = findViewById(R.id.delete_btn);
+        deleteBtn.setOnClickListener(view -> {
+            EditText memberNameTxt = findViewById(R.id.member_neme_txt);
+            String memberName = memberNameTxt.getText().toString();
+            arrayAdapter.remove(memberName);
+            arrayAdapter.notifyDataSetChanged();
+            memberNameTxt.setText("");
+        });
     }
 
     public void setupTeamListAddBtn() {
@@ -44,21 +55,19 @@ public class TeamListActivity extends AppCompatActivity {
 
     public void setUpTeamListData() {
         teamList = new ArrayList<>();
-        teamList.add("Viswanath");
+        teamList.add("Vishwanath");
         teamList.add("Renuka");
     }
 
-    public void setupListViewTeamList() {
+    public void setupTeamList() {
         teamListLv = findViewById(R.id.teamlist_lv);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, teamList);
         teamListLv.setAdapter(arrayAdapter);
-        teamListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(TeamListActivity.this, "Team List :" + teamList.get(position), Toast.LENGTH_SHORT).show();
-
-            }
+        teamListLv.setOnItemClickListener((adapterView, view, position, l) -> {
+            String memberName = teamList.get(position);
+            EditText memberNameTxt = findViewById(R.id.member_neme_txt);
+            memberNameTxt.setText(memberName);
+            Toast.makeText(this, "Click : " + teamList.get(position), Toast.LENGTH_SHORT).show();
         });
     }
-
 }
